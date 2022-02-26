@@ -1,0 +1,74 @@
+"""
+Tarea 1: Integración y derivación numérica
+Valeria Bonilla Rojas
+2018254434
+
+Física Computacional I
+Ing. Física
+Problema 1
+"""
+
+
+"""
+Dadas las condiciones presentadas en el problema, se prcocede a resolver a
+través de las ecuaciones de cinemática, con condiciones dadas desde el
+enunciado, como el intervalo de tiempo, velocidad inicial y aceleración.
+"""
+
+#Se definen los límites de integración con el rango de tiempo [0.0 s , 100.0 s]
+a=0
+b=100
+
+#Se definen la cantidad de puntos para la cantidad de intervalos
+N=4
+
+#Se definen las variables de velocidad inicial y aceleración
+v0=0.5
+aceleración=0.005
+
+
+#El método de Trapecio, conlleva un vector de pesos relacionado, se define como:
+def PesosWi(i,N):
+    
+    """ Se sabe que para el caso del método de Trapecio se definen dos pesos
+    distintos, uno definido como h y otro como h/2, la función PesosWi 
+    retorna para el primer y último término h, y para el resto de términos
+    el correspondiente h/2"""
+    
+    h= (b-a)/(N-1)
+    if ((i==0) or (i==N-1)): wi=h/2  #h/2 para primer y último término
+    else: wi=h  #h para los términos intermedios
+    return wi
+
+    
+
+#Se define la función a usar: Ecuación de velocidad, incolucrando velocidad
+#final, inicial, aceleración y tiempo, dicha ecuación por el problema planteado
+def F(t):
+    """ La función F(t) retorna la velocidad, pues si se integra se logra 
+    obtener la posición, el cual es el dato buscado """
+    vf = v0 + aceleración*t
+    return vf
+
+
+
+#Se define la función de Trapecio para la sumatoria por método de traezoide
+def Trapecio(a,b,N):
+    """ Sabiendo que para la sumatoria final del método, es necesario la 
+    evaluación de cada xi creado para la función, multiplicado por el peso
+    correspondiente, obteniendo así cada uno de los términos de la sumatoria,
+    la función Trapecio cumple la función de retornar dicha sumatoria, la cual
+    corresponde al valor buscado de desplazamiento. """
+    
+    xi=0
+    h=(b-a)/(N-1) #Se define el ancho de los intervalos
+    for j in range (N):  #Se realiza hasta llegar al valor de N
+        wc=PesosWi(j,N)
+        xi=xi+F(a+j*h)*wc
+    else: return xi
+
+    
+    
+#Se llama a la funcion principal, para dar el resultado final buscado
+Desplazamiento=Trapecio(a,b,N)
+print ("El desplazamiento es",round(Desplazamiento,3),"m")
