@@ -1,0 +1,77 @@
+"""
+Tarea 1: Integración y derivación numérica
+Valeria Bonilla Rojas
+2018254434
+
+Física Computacional I
+Ing. Física
+Problema 2
+"""
+
+
+"""
+Dadas las condiciones presentadas en el problema, se prcocede a resolver a
+través de las ecuaciones de cinemática, con condiciones dadas desde el
+enunciado.
+"""
+
+#Se definen las variables a utilizar
+aceleración=0.01
+xi=-5.00
+vi=0
+xf=0
+t0=1
+"Busco el tiempo en llegar a xf"
+
+
+#Se define la función a usar: Ecuación de velocidad
+def F(t):
+    """"Se define la función de posición de cinemática como función base,
+    pues se buscarán las raíces correspondientes a t, y así obtener el valor 
+    deseado"""
+    x = xi + vi*t + (1/2)*aceleración*t**2
+    return x
+
+
+#Se define la derivada de la función
+def Fd(t):
+    """Por la definición del método de Newton-Raphson es necesario la 
+    definición de la derivada correspondiente de la funcuón principal, pues
+    es parte de uno de los términos de la evaluación para el valor final"""
+    dx = vi + aceleración*t
+    return dx
+
+#Se define la funcion principal
+def NewtonRaphson(t0):
+    """Para la función de Newton-Raphson, se definen los parámetros deseados
+    y un término ti donde se irán reproduciendo posibles valores de la raiz
+    correspontiende a t hasta cumplir con una tolerancia deseada como
+    condición de paro, pues la función compara el valor obtenido con el valor
+    teórico hasta cumplir con dicha tolerancia. El valor obtenido se da a
+    partir de la resta de la división de la evaluación del ti
+    correspondiente en la función original y en la derivada de la misma."""
+    ti=t0
+    tolerancia = 0.001
+    tiempo_teorico = 10*10**(1/2)
+    error_calc = 1
+    i=0
+    while error_calc > tolerancia:
+        ti=ti-F(ti)/Fd(ti)
+        error_calc=abs((tiempo_teorico-ti)/tiempo_teorico)
+        i=i+1
+    else: return ti , error_calc , i
+    
+#Se llama a la función principal para el resultado final
+"""En la función de NewtonRaphson se retornan dos valores, por lo que para el
+resultado final, se obtiene el valor en la posición 0 para el valor de ti
+final o el tiempo deseado, se obtiene el valor en la posición 1 para el valor
+del error estimado, así como la posición 2 para la cantidad de iteraciones 
+utilizadas para obtener el ti a la tolerancia deseada"""
+Resultado=NewtonRaphson(t0)
+Tiempo=round(Resultado[0],2)
+Error=round(Resultado[1],6)
+Iteraciones=Resultado[2]
+print ("El tiempo que dura en llegar a x=0 m es",Tiempo,"s.")
+print ("Y el error de cálculo es",Error)
+print ("Para el cálculo del tiempo final, fueron necesarias",Iteraciones,"iteraciones")
+    
