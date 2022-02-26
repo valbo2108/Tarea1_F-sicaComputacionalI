@@ -62,7 +62,7 @@ def NewtonRaphson(t0):
     else: return ti , error_calc , i
     
 #Se llama a la función principal para el resultado final
-"""En la función de NewtonRaphson se retornan dos valores, por lo que para el
+"""En la función de NewtonRaphson se retornan tres valores, por lo que para el
 resultado final, se obtiene el valor en la posición 0 para el valor de ti
 final o el tiempo deseado, se obtiene el valor en la posición 1 para el valor
 del error estimado, así como la posición 2 para la cantidad de iteraciones 
